@@ -1,0 +1,15 @@
+require: 
+  - rubocop-rails
+  - rubocop-rspec
+
+# AllCops settings
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - node_modules/**/*
+    - vendor/**/*
+    - tmp/**/*
+
+# Line length
+Metrics/LineLength:
+  Max: 120
