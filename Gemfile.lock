@@ -122,7 +122,6 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     mutex_m (0.2.0)
-    mysql2 (0.5.5)
     net-imap (0.4.4)
       date
       net-protocol
@@ -141,6 +140,7 @@ GEM
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
+    pg (1.5.4)
     psych (5.1.1.1)
       stringio
     puma (6.4.0)
@@ -262,7 +262,7 @@ DEPENDENCIES
   debug
   jbuilder
   jsbundling-rails
-  mysql2 (~> 0.5)
+  pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.2)
   redis (>= 4.0.1)

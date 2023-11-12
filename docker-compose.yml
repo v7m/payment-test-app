@@ -1,40 +1,38 @@
-version: '3.3'
+version: "3.3"
 services:
   app:
     build: .
-    command: [ "bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0" ]
+    command: bash -c "bundle exec rails s -p 3000 -b '0.0.0.0'"
+    tty: true
     volumes:
-      - .:/app
+      - .:/rails
     depends_on:
       - db
     environment:
       RAILS_ENV: development
-      MYSQL_HOST: db
-      MYSQL_USERNAME: root
-      MYSQL_PASSWORD: root
+      POSTGRES_HOST: db
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - '3000:3000'
-    tty: true  
-    entrypoint: bin/docker-entrypoint
+      - "3000:3000"
     networks:
       - backend
 
   db:
-    image: mysql
+    image: postgres
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: payment_test_app_development
-      MYSQL_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - db_data:/var/lib/mysql
+      - postgres:/var/lib/postgresql/data
     networks:
       - backend
 
 volumes:
-  db_data:
+  postgres:
 networks:
   backend:
-    driver: 'bridge'
+    driver: "bridge"
