@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_12_175418) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_12_231453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -24,4 +24,20 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_12_175418) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "merchant_id"
+    t.uuid "referenced_transaction_id"
+    t.string "type"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "status"
+    t.string "customer_email", default: "", null: false
+    t.string "customer_phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["merchant_id"], name: "index_transactions_on_merchant_id"
+    t.index ["referenced_transaction_id"], name: "index_transactions_on_referenced_transaction_id"
+  end
+
+  add_foreign_key "transactions", "merchants"
+  add_foreign_key "transactions", "transactions", column: "referenced_transaction_id"
 end

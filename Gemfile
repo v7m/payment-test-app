@@ -14,7 +14,7 @@ gem "jbuilder"
 gem "redis", ">= 4.0.1"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
-gem "email_validator"
+gem "validates_email_format_of"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]

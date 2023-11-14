@@ -94,8 +94,6 @@ GEM
     diff-lcs (1.5.0)
     drb (2.2.0)
       ruby2_keywords
-    email_validator (2.2.4)
-      activemodel
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -270,6 +268,8 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    validates_email_format_of (1.7.2)
+      i18n
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -289,7 +289,6 @@ DEPENDENCIES
   bootsnap
   cssbundling-rails
   debug
-  email_validator
   factory_bot_rails
   faker
   jbuilder
@@ -306,6 +305,7 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   tzinfo-data
+  validates_email_format_of
   web-console
 
 RUBY VERSION
