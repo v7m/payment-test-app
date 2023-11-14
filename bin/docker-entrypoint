@@ -1,15 +1,13 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+if [ "${3}" == "./bin/rails" ] && [ "${4}" == "server" ]; then
   rm -rf /app/tmp/pids/server.pid
   rm -rf /app/tmp/cache/*
 
-  # Install gems if Gemfile.lock is not present or if Gemfile has changed
-  if [ ! -e Gemfile.lock ] || [ Gemfile -nt Gemfile.lock ]; then
-    bundle install
-  fi
+  # Install gems
+  bundle install
 
+  # Create or migrate existing database
   ./bin/rails db:prepare
 fi
 
