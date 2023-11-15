@@ -9,10 +9,10 @@ describe Transactions::ReversalTransaction, type: :model do
 
   context "validations" do
     describe "#no_charge_transaction" do
-      let(:authorize_transaction) { create(:authorize_transaction, merchant: merchant) }
+      let(:authorize_transaction) { create(:authorize_transaction, :approved, merchant: merchant) }
 
       context "when charge transaction does not exist" do
-        let(:reversal_transaction) { build(:reversal_transaction, merchant: merchant, authorize_transaction: authorize_transaction) }
+        let(:reversal_transaction) { build(:reversal_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction) }
 
         it 'returns true and does not add error' do
           expect(reversal_transaction.valid?).to be_truthy
@@ -21,7 +21,7 @@ describe Transactions::ReversalTransaction, type: :model do
       end
 
       context "when charge transaction exist" do
-        let(:reversal_transaction) { build(:reversal_transaction, merchant: merchant, authorize_transaction: authorize_transaction) }
+        let(:reversal_transaction) { build(:reversal_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction) }
 
         before do
           create(:charge_transaction, merchant: merchant, authorize_transaction: authorize_transaction)

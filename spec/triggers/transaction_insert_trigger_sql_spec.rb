@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe TransactionInsertTriggerSQL do
   let(:merchant) { create(:merchant, :active) }
-  let(:authorize_transaction) { create(:authorize_transaction, merchant: merchant) }
+  let(:authorize_transaction) { create(:authorize_transaction, :approved, merchant: merchant) }
 
   context "when new Transactions::ChargeTransaction created" do
     it "encreases merchant's total_transaction_sum" do

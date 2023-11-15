@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe TransactionDeleteTriggerSQL do
   let(:merchant) { create(:merchant, :active) }
-  let(:authorize_transaction) { create(:authorize_transaction, merchant: merchant) }
+  let(:authorize_transaction) { create(:authorize_transaction, :approved, merchant: merchant) }
   let!(:charge_transaction) do 
     create(:charge_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction)
   end

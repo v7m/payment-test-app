@@ -12,10 +12,10 @@ describe Transactions::ChargeTransaction, type: :model do
     it { is_expected.to validate_presence_of(:amount) }
 
     describe "#no_reversal_transaction" do
-      let(:authorize_transaction) { create(:authorize_transaction, merchant: merchant) }
+      let(:authorize_transaction) { create(:authorize_transaction, :approved, merchant: merchant) }
 
       context "when reversal transaction does not exist" do
-        let(:charge_transaction) { build(:charge_transaction, merchant: merchant, authorize_transaction: authorize_transaction) }
+        let(:charge_transaction) { build(:charge_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction) }
 
         it 'returns true and does not add error' do
           expect(charge_transaction.valid?).to be_truthy
@@ -24,7 +24,7 @@ describe Transactions::ChargeTransaction, type: :model do
       end
 
       context "when reversal transaction exist" do
-        let(:charge_transaction) { build(:charge_transaction, merchant: merchant, authorize_transaction: authorize_transaction) }
+        let(:charge_transaction) { build(:charge_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction) }
 
         before do
           create(:reversal_transaction, merchant: merchant, authorize_transaction: authorize_transaction)

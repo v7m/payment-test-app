@@ -5,9 +5,11 @@ class Transactions::ChargeTransaction < Transaction
   validates :amount, presence: true
   validate :no_reversal_transaction
 
+  private
+
   def no_reversal_transaction
     if authorize_transaction&.reversal_transaction.present?
       errors.add(:base, "An AuthorizeTransaction can only have either ChargeTransaction or ReversalTransaction") 
     end
-  end                                
+  end
 end
