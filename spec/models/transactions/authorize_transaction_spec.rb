@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Transactions::AuthorizeTransaction, type: :model do
   context "associations" do

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Transactions::ChargeTransaction, type: :model do
   let(:merchant) { create(:merchant, :active) }

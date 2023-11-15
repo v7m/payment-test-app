@@ -7,6 +7,7 @@ class Merchant < ApplicationRecord
 
   enum status: { inactive: 0, active: 1 }
 
+  validates :total_transaction_sum, presence: true
   validates :name, presence: true
   validates :status, presence: true, inclusion: { in: statuses.keys }
   validates :email, presence: true, uniqueness: true, email_format: true

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Merchant, type: :model do
   context "associations" do
@@ -10,6 +10,7 @@ describe Merchant, type: :model do
   end
 
   context "validations" do
+    it { is_expected.to validate_presence_of(:total_transaction_sum) }
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to define_enum_for(:status).with_values(inactive: 0, active: 1) }
     it { is_expected.to validate_presence_of(:email) }
