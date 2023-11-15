@@ -7,6 +7,28 @@ describe Merchant, type: :model do
     it { is_expected.to have_many(:charge_transactions).class_name("Transactions::ChargeTransaction") }
     it { is_expected.to have_many(:refund_transactions).class_name("Transactions::RefundTransaction") }
     it { is_expected.to have_many(:reversal_transactions).class_name("Transactions::ReversalTransaction") }
+
+    context "deleting with associated transactions" do
+      let!(:merchant) { create(:merchant, :active) }
+
+      context "when associated transactions are present" do
+        before do
+          create(:authorize_transaction, :approved, merchant: merchant)
+        end
+
+        it "does not allow deletion of merchant" do
+          expect { merchant.destroy }.not_to change(Merchant, :count)
+          expect(merchant.errors[:base]).to include("Cannot delete record because dependent transactions exist")
+        end
+      end
+
+      context "when associated transactions are not present" do
+        it "allows deletion of merchant" do
+          expect { merchant.destroy }.to change(Merchant, :count).by(-1)
+          expect(Merchant.exists?(merchant.id)).to be_falsey
+        end
+      end
+    end
   end
 
   context "validations" do

@@ -1,5 +1,5 @@
 class Merchant < ApplicationRecord
-  has_many :transactions, dependent: :destroy
+  has_many :transactions, dependent: :restrict_with_error
   has_many :authorize_transactions, class_name: "Transactions::AuthorizeTransaction", dependent: :destroy
   has_many :charge_transactions, class_name: "Transactions::ChargeTransaction", dependent: :destroy
   has_many :refund_transactions, class_name: "Transactions::RefundTransaction", dependent: :destroy
