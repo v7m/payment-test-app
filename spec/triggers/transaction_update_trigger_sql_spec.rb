@@ -7,7 +7,7 @@ describe TransactionUpdateTriggerSQL do
   context "when transaction's status changed" do
     context "when status was not 'approved' and changed to 'approved'" do
       let!(:charge_transaction) do 
-        create(:charge_transaction, :refunded, merchant: merchant, authorize_transaction: authorize_transaction)
+        create(:charge_transaction, :refunded, merchant: merchant, referenced_transaction: authorize_transaction)
       end
       
       context "when Transactions::ChargeTransaction type" do
@@ -30,7 +30,7 @@ describe TransactionUpdateTriggerSQL do
 
       context "when Transactions::RefundTransaction type" do
         let!(:refund_transaction) do 
-          create(:refund_transaction, :refunded, merchant: merchant, charge_transaction: charge_transaction)
+          create(:refund_transaction, :refunded, merchant: merchant, referenced_transaction: charge_transaction)
         end
 
         context "when amount changed" do
@@ -53,7 +53,7 @@ describe TransactionUpdateTriggerSQL do
 
     context "when status was 'approved' and changed to not 'approved'" do
       let!(:charge_transaction) do 
-        create(:charge_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction)
+        create(:charge_transaction, :approved, merchant: merchant, referenced_transaction: authorize_transaction)
       end
       
       context "when Transactions::ChargeTransaction type" do
@@ -76,7 +76,7 @@ describe TransactionUpdateTriggerSQL do
 
       context "when Transactions::RefundTransaction type" do
         let!(:refund_transaction) do 
-          create(:refund_transaction, :approved, merchant: merchant, charge_transaction: charge_transaction)
+          create(:refund_transaction, :approved, merchant: merchant, referenced_transaction: charge_transaction)
         end
 
         context "when amount changed" do
@@ -100,7 +100,7 @@ describe TransactionUpdateTriggerSQL do
 
   context "when transaction's status didn't change" do
     let!(:charge_transaction) do 
-      create(:charge_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction)
+      create(:charge_transaction, :approved, merchant: merchant, referenced_transaction: authorize_transaction)
     end
     
     context "when Transactions::ChargeTransaction type" do
@@ -113,7 +113,7 @@ describe TransactionUpdateTriggerSQL do
 
     context "when Transactions::RefundTransaction type" do
       let!(:refund_transaction) do 
-        create(:refund_transaction, :approved, merchant: merchant, charge_transaction: charge_transaction)
+        create(:refund_transaction, :approved, merchant: merchant, referenced_transaction: charge_transaction)
       end
 
       it "decreased merchant's total_transaction_sum" do

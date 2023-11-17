@@ -1,5 +1,5 @@
 class Transactions::RefundTransaction < Transaction
-  belongs_to :charge_transaction, foreign_key: :referenced_transaction_id, required: true
+  belongs_to :referenced_transaction, class_name: "Transactions::ChargeTransaction", foreign_key: :referenced_transaction_id, required: true
 
   validates :amount, presence: true
 end

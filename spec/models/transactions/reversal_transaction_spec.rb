@@ -4,7 +4,7 @@ describe Transactions::ReversalTransaction, type: :model do
   let(:merchant) { create(:merchant, :active) }
 
   context "associations" do
-    it { is_expected.to belong_to(:authorize_transaction) }
+    it { is_expected.to belong_to(:referenced_transaction).class_name("Transactions::AuthorizeTransaction") }
   end
 
   context "validations" do
@@ -12,7 +12,7 @@ describe Transactions::ReversalTransaction, type: :model do
       let(:authorize_transaction) { create(:authorize_transaction, :approved, merchant: merchant) }
 
       context "when charge transaction does not exist" do
-        let(:reversal_transaction) { build(:reversal_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction) }
+        let(:reversal_transaction) { build(:reversal_transaction, :approved, merchant: merchant, referenced_transaction: authorize_transaction) }
 
         it 'returns true and does not add error' do
           expect(reversal_transaction.valid?).to be_truthy
@@ -21,10 +21,10 @@ describe Transactions::ReversalTransaction, type: :model do
       end
 
       context "when charge transaction exist" do
-        let(:reversal_transaction) { build(:reversal_transaction, :approved, merchant: merchant, authorize_transaction: authorize_transaction) }
+        let(:reversal_transaction) { build(:reversal_transaction, :approved, merchant: merchant, referenced_transaction: authorize_transaction) }
 
         before do
-          create(:charge_transaction, merchant: merchant, authorize_transaction: authorize_transaction)
+          create(:charge_transaction, merchant: merchant, referenced_transaction: authorize_transaction)
         end
 
         it 'returns false and adds error' do

@@ -1,12 +1,14 @@
 class Transactions::ReversalTransaction < Transaction
-  belongs_to :authorize_transaction, foreign_key: :referenced_transaction_id, required: true
+  belongs_to :referenced_transaction, class_name: "Transactions::AuthorizeTransaction", foreign_key: :referenced_transaction_id, required: true
 
   validate :no_charge_transaction
 
   private
 
   def no_charge_transaction
-    if authorize_transaction&.charge_transaction.present?
+    return unless referenced_transaction.present?
+
+    if referenced_transaction.charge_transactions.any?
       errors.add(:base, "An AuthorizeTransaction can only have either ChargeTransaction or ReversalTransaction") 
     end
   end 
