@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ReferencedTransactionMerchantValidatable
   extend ActiveSupport::Concern
 
@@ -6,10 +8,8 @@ module ReferencedTransactionMerchantValidatable
   end
 
   def referenced_transaction_merchant
-    return unless referenced_transaction.present?
+    return if referenced_transaction&.merchant_id == merchant_id
 
-    if merchant_id != referenced_transaction.merchant_id
-      errors.add(:merchant_id, "Merchant mismatch between referenced and current transactions") 
-    end
+    errors.add(:merchant_id, "Merchant mismatch between referenced and current transactions")
   end
 end

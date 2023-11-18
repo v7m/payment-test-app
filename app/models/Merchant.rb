@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Merchant < ApplicationRecord
   has_many :transactions, dependent: :restrict_with_error
   has_many :authorize_transactions, class_name: "Transactions::AuthorizeTransaction", dependent: :destroy

@@ -1,7 +1,9 @@
-class Transaction < ApplicationRecord
-  PERMITTED_REFERENCE_STATUSES = %w(approved refunded).freeze
+# frozen_string_literal: true
 
-  belongs_to :merchant, required: true
+class Transaction < ApplicationRecord
+  PERMITTED_REFERENCE_STATUSES = %w[approved refunded].freeze
+
+  belongs_to :merchant
 
   enum status: { approved: 0, reversed: 1, refunded: 2, error: 3 }
 
