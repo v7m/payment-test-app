@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TransactionUpdateTriggerSQL
   def self.create_trigger_function
     <<-SQL

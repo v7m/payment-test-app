@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TransactionDeleteTriggerSQL
   def self.create_trigger_function
     <<-SQL
