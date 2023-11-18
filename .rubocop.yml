@@ -19,3 +19,6 @@ Style/StringLiterals:
   SupportedStyles:
     - single_quotes
     - double_quotes
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false

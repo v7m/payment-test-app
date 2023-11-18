@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Transactions::CreateTransactionService < ApplicationService
   attr_reader :initialized_transaction, :transaction_valid
 
@@ -19,7 +21,7 @@ class Transactions::CreateTransactionService < ApplicationService
     ActiveRecord::Base.transaction do
       initialize_transaction
 
-      return result_data unless initialized_transaction.present?
+      return result_data if initialized_transaction.blank?
 
       validate
 
@@ -28,7 +30,6 @@ class Transactions::CreateTransactionService < ApplicationService
       yield if block_given?
 
       save_transaction
-
       result_data
     end
   end
@@ -51,7 +52,7 @@ class Transactions::CreateTransactionService < ApplicationService
     @errors.concat(e.record.errors.full_messages)
   end
 
-  def initialize_transaction
+  def initialize_transaction # rubocop:disable Metrics/MethodLength
     @initialized_transaction ||= Transaction.new(
       merchant_id: @merchant_id,
       referenced_transaction_id: referenced_transaction&.id,
@@ -86,14 +87,20 @@ class Transactions::CreateTransactionService < ApplicationService
   end
 
   def validate_merchant_id!(merchant_id)
-    raise ArgumentError.new("merchant_id is required") unless merchant_id.present?
+    return if merchant_id.present?
+
+    raise ArgumentError, "merchant_id is required"
   end
 
   def validate_referenced_transaction_id_param!(referenced_transaction_id)
-    raise ArgumentError.new("referenced_transaction_id is required") unless referenced_transaction_id.present?
+    return if referenced_transaction_id.present?
+
+    raise ArgumentError, "referenced_transaction_id is required"
   end
 
   def validate_amount!(amount)
-    raise ArgumentError.new("amount is required") unless amount.present?
+    return if amount.present?
+
+    raise ArgumentError, "amount is required"
   end
 end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Transactions
   class CreateAuthorizeTransactionService < CreateTransactionService
-    TRANSACTION_TYPE = "Transactions::AuthorizeTransaction".freeze
+    TRANSACTION_TYPE = "Transactions::AuthorizeTransaction"
 
     private
 
@@ -21,9 +23,9 @@ module Transactions
     end
 
     def validate_referenced_transaction_id_param!(referenced_transaction_id)
-      if referenced_transaction_id.present?
-        raise ArgumentError.new("referenced_transaction_id is not allowed for AuthorizeTransaction")
-      end
+      return if referenced_transaction_id.blank?
+
+      raise ArgumentError, "referenced_transaction_id is not allowed for AuthorizeTransaction"
     end
   end
 end

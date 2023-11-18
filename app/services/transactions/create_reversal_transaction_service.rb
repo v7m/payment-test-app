@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Transactions
   class CreateReversalTransactionService < CreateTransactionService
-    TRANSACTION_TYPE = "Transactions::ReversalTransaction".freeze
+    TRANSACTION_TYPE = "Transactions::ReversalTransaction"
 
     def call
       super { referenced_transaction.reversed! }
@@ -13,7 +15,9 @@ module Transactions
     end
 
     def validate_amount!(amount)
-      raise ArgumentError.new("amount is not allowed for ReversalTransaction") if amount.present?
+      return if amount.blank?
+
+      raise ArgumentError, "amount is not allowed for ReversalTransaction"
     end
   end
 end

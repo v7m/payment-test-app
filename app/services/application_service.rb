@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class ApplicationService
   RESULT_STATUS = {
     success: :success,
-    failure: :failure,
-  }
+    failure: :failure
+  }.freeze
 
   def self.call(**args, &block)
     new(**args, &block).call
@@ -16,7 +18,7 @@ class ApplicationService
   private
 
   def result_data
-    OpenStruct.new(result_status: result_status, errors: @errors, record: @record)
+    OpenStruct.new(result_status:, errors: @errors, record: @record)
   end
 
   def result_status

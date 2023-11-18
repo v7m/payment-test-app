@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Transactions
   class CreateRefundTransactionService < CreateTransactionService
-    TRANSACTION_TYPE = "Transactions::RefundTransaction".freeze
+    TRANSACTION_TYPE = "Transactions::RefundTransaction"
 
     def call
       super { referenced_transaction.refunded! }

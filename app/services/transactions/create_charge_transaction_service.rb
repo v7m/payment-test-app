@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Transactions
   class CreateChargeTransactionService < CreateTransactionService
-    TRANSACTION_TYPE = "Transactions::ChargeTransaction".freeze
+    TRANSACTION_TYPE = "Transactions::ChargeTransaction"
 
     private
 

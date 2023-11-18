@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Transactions
   class CreateTransactionFactory
     def initialize(merchant_id:, referenced_transaction_id: nil, status:, amount: nil, customer_email:, customer_phone: nil)
