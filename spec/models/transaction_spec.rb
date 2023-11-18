@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 describe Transaction, type: :model do
-  context "associations" do
+  context "for associations" do
     it { is_expected.to belong_to(:merchant) }
   end
 
-  context "validations" do
+  context "for validations" do
     it { is_expected.to validate_presence_of(:type) }
     it { is_expected.to validate_numericality_of(:amount).is_greater_than(0).allow_nil }
     it { is_expected.to define_enum_for(:status).with_values(approved: 0, reversed: 1, refunded: 2, error: 3) }

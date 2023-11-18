@@ -22,3 +22,26 @@ Style/StringLiterals:
 
 Metrics/ParameterLists:
   CountKeywordArgs: false
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - unless
+    - for
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 7
+# RSpec/ScenarioLength:
+#   Max: 20

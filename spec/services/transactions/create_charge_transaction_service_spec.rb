@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require "rails_helper"
-require 'faker'
-require 'shared_examples/create_transaction_shared_examples'
+require "faker"
+require "shared_examples/create_transaction_shared_examples"
 
 describe Transactions::CreateChargeTransactionService do
   subject { described_class.call(**transaction_params) }
 
   include_context "with common transaction setup"
 
-  let(:referenced_transaction) { create(:authorize_transaction, :approved, merchant: merchant) }
+  let(:referenced_transaction) { create(:authorize_transaction, :approved, merchant:) }
   let(:referenced_transaction_id) { referenced_transaction.id }
   let(:result) { subject }
 

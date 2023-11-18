@@ -1,20 +1,22 @@
+# frozen_string_literal: true
+
 shared_context "with common transaction setup" do
   let!(:merchant) { create(:merchant, :active) }
   let(:merchant_id) { merchant.id }
   let(:status) { "approved" }
   let(:amount) { 100.0 }
-  let(:customer_phone)  { Faker::PhoneNumber.phone_number }
+  let(:customer_phone) { Faker::PhoneNumber.phone_number }
   let(:customer_email) { Faker::Internet.email }
-  let(:transaction_params) {
+  let(:transaction_params) do
     {
-      merchant_id: merchant_id,
-      referenced_transaction_id: referenced_transaction_id,
-      status: status,
-      amount: amount,
-      customer_email: customer_email,
-      customer_phone: customer_phone
+      merchant_id:,
+      referenced_transaction_id:,
+      status:,
+      amount:,
+      customer_email:,
+      customer_phone:
     }
-  }
+  end
 end
 
 shared_examples "new transaction creation" do |klass|
@@ -95,9 +97,9 @@ shared_examples "transaction required fields validation" do
 end
 
 shared_examples "status setting based on referenced transaction status" do
-  shared_examples "with correct status" do |referenced_transaction_status, status|
+  shared_examples "with correct status" do |status|
     before do
-      referenced_transaction.update!(status: status)
+      referenced_transaction.update!(status:)
     end
 
     it "returns correct data" do
@@ -107,14 +109,14 @@ shared_examples "status setting based on referenced transaction status" do
   end
 
   context "when referenced transaction status are permitted" do
-    %w(approved refunded).each do |referenced_transaction_status|
-      it_behaves_like "with correct status", referenced_transaction_status, "approved"
+    %w[approved refunded].each do
+      it_behaves_like "with correct status", "approved"
     end
   end
 
   context "when referenced transaction status not permitted" do
-    %w(reversed error).each do |referenced_transaction_status|
-      it_behaves_like "with correct status", referenced_transaction_status, "error"
+    %w[reversed error].each do
+      it_behaves_like "with correct status", "error"
     end
   end
 end
@@ -129,9 +131,9 @@ shared_examples "referenced transaction validation" do
       expect { subject }.to raise_error(ArgumentError, error_message)
     end
   end
-  
+
   context "when referenced transaction is not exist" do
-    let(:referenced_transaction_id) { 99999 }
+    let(:referenced_transaction_id) { 99_999 }
 
     it "returns correct data" do
       expect(result.result_status).to eq(:failure)
@@ -141,7 +143,7 @@ shared_examples "referenced transaction validation" do
   end
 
   context "when referenced transaction has wrong type" do
-    let(:referenced_transaction) { create(:refund_transaction_with_referenced, :approved, merchant: merchant) }
+    let(:referenced_transaction) { create(:refund_transaction_with_referenced, :approved, merchant:) }
 
     it "returns correct data" do
       expect(result.result_status).to eq(:failure)

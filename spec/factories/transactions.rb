@@ -1,9 +1,11 @@
-require 'faker'
+# frozen_string_literal: true
+
+require "faker"
 
 FactoryBot.define do
   factory :transaction do
     association :merchant
-    customer_phone  { Faker::PhoneNumber.phone_number }
+    customer_phone { Faker::PhoneNumber.phone_number }
     customer_email { Faker::Internet.email }
 
     traits_for_enum :status
@@ -34,7 +36,8 @@ FactoryBot.define do
     before(:create) do |refund_transaction|
       unless refund_transaction.referenced_transaction
         authorize_transaction = create(:authorize_transaction, :approved, merchant: refund_transaction.merchant)
-        charge_transaction = create(:charge_transaction, :approved, merchant: refund_transaction.merchant, referenced_transaction: authorize_transaction)
+        charge_transaction = create(:charge_transaction, :approved, merchant: refund_transaction.merchant,
+                                                                    referenced_transaction: authorize_transaction)
         refund_transaction.referenced_transaction = charge_transaction
       end
     end

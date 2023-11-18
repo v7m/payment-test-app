@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 shared_examples "referenced transaction merchant validatable" do
@@ -13,8 +15,8 @@ shared_examples "referenced transaction merchant validatable" do
 
   describe "#referenced_transaction_merchant" do
     context "when a transaction has the same merchant as the referenced transaction" do
-      let(:transaction) do 
-        build(transaction_factory_name, :approved, merchant: merchant1, referenced_transaction: referenced_transaction)
+      let(:transaction) do
+        build(transaction_factory_name, :approved, merchant: merchant1, referenced_transaction:)
       end
 
       it "does not add any error messages on validation" do
@@ -23,11 +25,11 @@ shared_examples "referenced transaction merchant validatable" do
         expect(transaction.errors.full_messages).to be_empty
       end
     end
-    
+
     context "when a transaction has a different merchant as the reference transaction" do
       let!(:merchant2) { create(:merchant, :active) }
       let(:transaction) do 
-        build(transaction_factory_name, :approved, merchant: merchant2, referenced_transaction: referenced_transaction)
+        build(transaction_factory_name, :approved, merchant: merchant2, referenced_transaction:)
       end
 
       it "does not add error message on validation" do
