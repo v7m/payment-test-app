@@ -120,7 +120,7 @@ shared_examples "status setting based on referenced transaction status" do
 end
 
 shared_examples "referenced transaction validation" do
-  context "when references referenced_transaction_id is nil" do
+  context "when referenced referenced_transaction_id is nil" do
     let(:referenced_transaction_id) { nil }
 
     it "raises ArgumentError" do
@@ -130,7 +130,7 @@ shared_examples "referenced transaction validation" do
     end
   end
   
-  context "when references transaction is not exist" do
+  context "when referenced transaction is not exist" do
     let(:referenced_transaction_id) { 99999 }
 
     it "returns correct data" do
@@ -140,10 +140,8 @@ shared_examples "referenced transaction validation" do
     end
   end
 
-  context "when references transaction has wrong type" do
-    let(:authorize_transaction) { create(:authorize_transaction, :approved, merchant: merchant) }
-    let(:charge_transaction) { create(:charge_transaction, :approved, merchant: merchant, referenced_transaction: authorize_transaction) }
-    let(:referenced_transaction) { create(:refund_transaction, :approved, merchant: merchant, referenced_transaction: charge_transaction) }
+  context "when referenced transaction has wrong type" do
+    let(:referenced_transaction) { create(:refund_transaction_with_referenced, :approved, merchant: merchant) }
 
     it "returns correct data" do
       expect(result.result_status).to eq(:failure)

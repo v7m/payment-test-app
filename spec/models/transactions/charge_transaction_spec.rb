@@ -1,4 +1,5 @@
 require "rails_helper"
+require "models/concerns/referenced_transaction_merchant_validatable_spec"
 
 describe Transactions::ChargeTransaction, type: :model do
   let(:merchant) { create(:merchant, :active) }
@@ -9,6 +10,8 @@ describe Transactions::ChargeTransaction, type: :model do
   end
 
   context "validations" do
+    it_behaves_like "referenced transaction merchant validatable"
+
     it { is_expected.to validate_presence_of(:amount) }
 
     describe "#no_reversal_transaction" do

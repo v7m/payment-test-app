@@ -19,7 +19,7 @@ describe Transactions::CreateAuthorizeTransactionService do
     it_behaves_like "transaction required amount validation"
     it_behaves_like "transaction required fields validation"
 
-    context "when references transaction exists" do
+    context "when referenced transaction exists" do
       let(:referenced_transaction) { create(:authorize_transaction, merchant: merchant) }
       let(:referenced_transaction_id) { referenced_transaction.id }
 

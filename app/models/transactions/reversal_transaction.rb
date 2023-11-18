@@ -1,4 +1,6 @@
 class Transactions::ReversalTransaction < Transaction
+  include ReferencedTransactionMerchantValidatable
+
   belongs_to :referenced_transaction, class_name: "Transactions::AuthorizeTransaction", foreign_key: :referenced_transaction_id, required: true
 
   validate :no_charge_transaction
