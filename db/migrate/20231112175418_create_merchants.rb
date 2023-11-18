@@ -5,8 +5,8 @@ class CreateMerchants < ActiveRecord::Migration[7.1]
       t.string :description
       t.string :email, null: false, default: ""
       t.integer :status, null: false, default: 0
-      
+
       t.timestamps
-    end 
+    end
   end
 end
