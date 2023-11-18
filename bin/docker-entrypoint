@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 if [ "${3}" == "./bin/rails" ] && [ "${4}" == "server" ]; then
-  rm -rf /app/tmp/pids/server.pid
-  rm -rf /app/tmp/cache/*
+  rm -rf /rails/tmp/pids/server.pid
+  rm -rf /rails/tmp/cache/*
 
   # Install gems
   bundle install
