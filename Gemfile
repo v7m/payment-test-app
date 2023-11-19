@@ -15,6 +15,8 @@ gem "redis", ">= 4.0.1"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 gem "validates_email_format_of"
+gem "grape"
+gem "grape-entity"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]

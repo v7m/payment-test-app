@@ -18,10 +18,14 @@ class ApplicationService
   private
 
   def result_data
-    OpenStruct.new(result_status:, errors: @errors, record: @record)
+    OpenStruct.new(result_status:, errors: @errors, record: @record, success?: success?)
   end
 
   def result_status
-    @errors.none? ? RESULT_STATUS[:success] : RESULT_STATUS[:failure]
+    success? ? RESULT_STATUS[:success] : RESULT_STATUS[:failure]
+  end
+
+  def success?
+    @errors.none?
   end
 end

@@ -3,6 +3,7 @@
 require "rails_helper"
 require "faker"
 require "shared_examples/create_transaction_shared_examples"
+require "shared_examples/transaction_shared_context"
 
 describe Transactions::CreateAuthorizeTransactionService do
   subject(:service_call) { described_class.call(**transaction_params) }
