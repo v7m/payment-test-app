@@ -3,7 +3,7 @@
 module PaymentAPI
   module V1
     module Transactions
-      class RefundTransactions < Grape::API
+      class RefundTransactions < BaseTransactions
         helpers Helpers::TransactionsHelpers
 
         format :json

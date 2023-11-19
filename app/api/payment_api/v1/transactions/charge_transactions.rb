@@ -3,7 +3,7 @@
 module PaymentAPI
   module V1
     module Transactions
-      class ChargeTransactions < Grape::API
+      class ChargeTransactions < BaseTransactions
         helpers Helpers::TransactionsHelpers
 
         format :json

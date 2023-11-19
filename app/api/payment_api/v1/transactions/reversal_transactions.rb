@@ -3,7 +3,7 @@
 module PaymentAPI
   module V1
     module Transactions
-      class ReversalTransactions < Grape::API
+      class ReversalTransactions < BaseTransactions
         helpers Helpers::TransactionsHelpers
 
         format :json

@@ -19,16 +19,32 @@ shared_examples "create transaction endpoint" do
   end
 
   context "with invalid params" do
-    let(:status) { "not_valid_status" }
+    context "with invalid status" do
+      let(:status) { "not_valid_status" }
 
-    specify "returns status 422" do
-      expect(response).to have_http_status(:unprocessable_entity)
+      specify "returns status 422" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      specify "returns correct JSON" do
+        json_response = JSON.parse(response.body)
+
+        expect(json_response["errors"]).to include("'not_valid_status' is not a valid status")
+      end
     end
 
-    specify "returns correct JSON" do
-      json_response = JSON.parse(response.body)
+    context "when merchant is inactive" do
+      let(:merchant) { create(:merchant, :inactive) }
 
-      expect(json_response["errors"]).to include("'not_valid_status' is not a valid status")
+      specify "returns status 422" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      specify "returns correct JSON" do
+        json_response = JSON.parse(response.body)
+
+        expect(json_response["errors"]).to include("Merchant is in inactive state")
+      end
     end
   end
 end
