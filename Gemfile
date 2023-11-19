@@ -18,6 +18,7 @@ gem "validates_email_format_of"
 gem "grape"
 gem "grape-entity"
 gem "devise"
+gem "slim-rails"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]

@@ -6,6 +6,7 @@ module PaymentAPI
       version "v1", using: :path
       format :json
 
+      mount PaymentAPI::V1::Merchants
       mount PaymentAPI::V1::Transactions::AuthorizeTransactions
       mount PaymentAPI::V1::Transactions::ChargeTransactions
       mount PaymentAPI::V1::Transactions::ReversalTransactions
