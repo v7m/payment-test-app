@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Merchant < ApplicationRecord
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+
   has_many :transactions, dependent: :restrict_with_error
   has_many :authorize_transactions, class_name: "Transactions::AuthorizeTransaction", dependent: :destroy
   has_many :charge_transactions, class_name: "Transactions::ChargeTransaction", dependent: :destroy

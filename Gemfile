@@ -17,6 +17,7 @@ gem "bootsnap", require: false
 gem "validates_email_format_of"
 gem "grape"
 gem "grape-entity"
+gem "devise"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
