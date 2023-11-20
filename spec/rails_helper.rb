@@ -11,6 +11,7 @@ require "shoulda/matchers"
 require "validates_email_format_of/rspec_matcher"
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("db/triggers/*.rb")].each { |f| require f }
+require "database_cleaner/active_record"
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -67,6 +68,16 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.before(:suite) do
+    triggers = %w[
+      transactions_after_delete_row_trigger
+      transactions_after_insert_row_trigger
+      transactions_after_update_of_status_amount_row_trigger
+    ]
+    DatabaseCleaner[:active_record].strategy = :transaction
+    DatabaseCleaner[:active_record].clean_with(:truncation, except: triggers)
+  end
 end
 
 Shoulda::Matchers.configure do |config|
