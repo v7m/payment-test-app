@@ -38,9 +38,11 @@ module PaymentAPI
           requires :id, type: String, desc: "ID"
         end
         delete ":id" do
-          merchant&.destroy
-
-          { message: "Recipe deleted!" }
+          if merchant&.destroy
+            { message: "Recipe deleted!" }
+          else
+            error!(merchant.errors.full_messages.join(", "), 422)
+          end
         end
 
         route_param :id do

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useCallback, useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from '../contexts/AuthContext';
 import Transactions from './Transactions';
@@ -7,7 +7,12 @@ const Merchant = () => {
     const params = useParams();
     const navigate = useNavigate();
     const authContext = useContext(AuthContext);
-    const [merchant, setMerchant] = useState({ ingredients: "" });
+    const [merchant, setMerchant] = useState({});
+    const [transactionsPresent, setTransactionsPresent] = useState(false);
+
+    const handleTransactionsFetched = useCallback((result) => {
+        setTransactionsPresent(result)
+    }, []);
 
     useEffect(() => {
         const url = `/api/v1/merchants/${params.id}`;
@@ -77,7 +82,12 @@ const Merchant = () => {
                     {authContext.isCurrentUserAdmin ? (
                         <div className="row justify-content-md-center">
                             <div className="col-md-auto">
-                                <button type="button" className="btn btn-danger" onClick={deleteMerchant}>
+                                <button 
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={deleteMerchant}
+                                    disabled={transactionsPresent}
+                                >
                                     Delete Merchant
                                 </button>
                             </div>
@@ -86,7 +96,7 @@ const Merchant = () => {
                         null
                     )}
 
-                    <Transactions merchant_id={params.id}/>
+                    <Transactions merchant_id={params.id} onTransactionsFetched={handleTransactionsFetched}/>
                 </div>
             </div>
         </div>

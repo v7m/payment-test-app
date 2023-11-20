@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Transactions = ({ merchant_id }) => {
+const Transactions = ({ merchant_id, onTransactionsFetched }) => {
     const navigate = useNavigate();
     const [transactions, setTransactions] = useState([]);
 
@@ -12,26 +12,12 @@ const Transactions = ({ merchant_id }) => {
                 if (response.ok) { return response.json(); }
                 throw new Error("Network response was not ok.");
             })
-            .then((response) => setTransactions(response))
+            .then((response) => {
+                setTransactions(response);
+                onTransactionsFetched(response.length > 0);
+            })
             .catch(() => navigate("/"));
-    }, []);
-
-    const allTransactions = transactions.map((transaction, index) => (
-        <table className="table">
-            <tbody>
-                { 
-                    transactions.map((transaction, index) => (
-                        <tr key={index + 1}>
-                            <th scope="row">{index + 1}</th>
-                            <td>{transaction.id}</td>
-                            <td>{transaction.email}</td>
-                            <td>@{transaction.status}</td>
-                        </tr>
-                    )) 
-                }
-            </tbody>
-        </table> 
-    ));
+    }, [merchant_id, onTransactionsFetched]);
 
     return (
         <>

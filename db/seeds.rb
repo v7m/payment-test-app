@@ -16,6 +16,8 @@ Admin.create(
     password_confirmation: "password123"
   )
 
+  next if i.even?
+
   authenticate_transaction = Transactions::AuthorizeTransaction.create(
     merchant_id: merchant.id,
     amount: 100.0,
