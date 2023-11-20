@@ -1,14 +1,14 @@
 #!/bin/bash -e
 
 if [ "${3}" == "./bin/rails" ] && [ "${4}" == "server" ]; then
-  rm -rf /rails/tmp/pids/server.pid
-  rm -rf /rails/tmp/cache/*
+    rm -rf /rails/tmp/pids/server.pid
+    rm -rf /rails/tmp/cache/*
 
-  # Install gems
-  bundle install
+    # Install gems
+    bundle install
 
-  # Create or migrate existing database
-  ./bin/rails db:prepare
+    # Create or migrate existing database
+    ./bin/rails db:prepare
 fi
 
 exec "${@}"

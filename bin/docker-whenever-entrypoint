@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+# Install gems
+bundle install
+crontab -l
+
+exec "${@}"

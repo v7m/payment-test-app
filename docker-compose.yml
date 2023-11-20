@@ -4,6 +4,7 @@ services:
     build: .
     command: ["bundle", "exec", "./bin/rails", "server", "-p", "3000", "-b", "0.0.0.0"]
     tty: true
+    stdin_open: true
     volumes:
       - .:/rails
     depends_on:
@@ -16,6 +17,22 @@ services:
     ports:
       - "3000:3000"
     entrypoint: bin/docker-entrypoint
+    networks:
+      - backend
+
+  jobs:
+    build: .
+    command: ["bundle", "exec", "whenever", "--update-crontab", "&&", "cron", "-f"]
+    volumes:
+      - .:/rails
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: development
+      POSTGRES_HOST: db
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    entrypoint: bin/docker-whenever-entrypoint
     networks:
       - backend
 

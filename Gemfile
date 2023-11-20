@@ -19,6 +19,7 @@ gem "grape"
 gem "grape-entity"
 gem "devise"
 gem "slim-rails"
+gem "whenever", require: false
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
