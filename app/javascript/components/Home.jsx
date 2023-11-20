@@ -6,7 +6,7 @@ const Home = () => {
     const authContext = useContext(AuthContext);
 
     return (
-        <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
+        <div className="vw-100 vh-50 primary-color d-flex align-items-center justify-content-center">
             <div className="jumbotron jumbotron-fluid bg-transparent">
                 <div className="container secondary-color text-center">
                     <h1 className="display-4">Homepage</h1>

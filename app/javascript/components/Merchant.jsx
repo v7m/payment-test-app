@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from '../contexts/AuthContext';
+import Transactions from './Transactions';
 
 const Merchant = () => {
     const params = useParams();
@@ -39,7 +40,7 @@ const Merchant = () => {
     };
 
     return (
-        <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
+        <div className="vw-100 vh-50 primary-color d-flex align-items-center justify-content-center">
             <div className="jumbotron jumbotron-fluid bg-transparent">
                 <div className="container secondary-color text-center">
                     <div>
@@ -84,6 +85,8 @@ const Merchant = () => {
                     ) : (
                         null
                     )}
+
+                    <Transactions merchant_id={params.id}/>
                 </div>
             </div>
         </div>

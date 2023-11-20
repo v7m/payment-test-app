@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
                 if (response.ok) { return response.json(); }
                 throw new Error("Network response was not ok.");
             })
-            .then((response) => {debugger; setCurrentUser(response)})
+            .then((response) => {setCurrentUser(response)})
             .catch((error) => console.error("Error fetching user data: ", error));
     }, []);
 

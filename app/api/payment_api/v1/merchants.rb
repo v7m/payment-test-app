@@ -17,7 +17,7 @@ module PaymentAPI
         end
       end
 
-      resource :merchants do
+      resource :merchants do # rubocop:disable Metrics/BlockLength
         desc "Get merchants"
         get do
           merchants = Merchant.all
@@ -41,6 +41,15 @@ module PaymentAPI
           merchant&.destroy
 
           { message: "Recipe deleted!" }
+        end
+
+        route_param :id do
+          resource :transactions do
+            desc "Get all transactions"
+            get do
+              present merchant.transactions, with: PaymentAPI::V1::Entities::TransactionEntity
+            end
+          end
         end
       end
     end
