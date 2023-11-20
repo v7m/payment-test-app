@@ -46,3 +46,6 @@ RSpec/ExampleLength:
 
 RSpec/ExampleLength:
   Enabled: false
+
+Style/Documentation:
+  Enabled: false

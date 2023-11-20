@@ -18,9 +18,9 @@ class Transaction < ApplicationRecord
   validates :status, inclusion: { in: statuses.keys }, allow_nil: true
   validates :customer_email, presence: true, email_format: true
 
-  statuses.keys.each do |status|
+  statuses.each_key do |status|
     TRANSACTION_TYPES.each do |type|
-      scope "#{type.demodulize.underscore.split('_').first}_#{status}", -> { where(status: status, type: type) }
+      scope "#{type.demodulize.underscore.split('_').first}_#{status}", -> { where(status:, type:) }
     end
   end
 
