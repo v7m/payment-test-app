@@ -2,6 +2,12 @@
 
 class Transaction < ApplicationRecord
   PERMITTED_REFERENCE_STATUSES = %w[approved refunded].freeze
+  TRANSACTION_TYPES = %w[
+    Transactions::AuthorizeTransaction
+    Transactions::ChargeTransaction
+    Transactions::ReversalTransaction
+    Transactions::RefundTransaction
+  ].freeze
 
   belongs_to :merchant
 
@@ -12,8 +18,15 @@ class Transaction < ApplicationRecord
   validates :status, inclusion: { in: statuses.keys }, allow_nil: true
   validates :customer_email, presence: true, email_format: true
 
-  scope :approved_authorize, -> { where(type: "Transactions::AuthorizeTransaction").approved }
-  scope :approved_revessed, -> { where(type: "Transactions::AuthorizeTransaction").reversed }
-  scope :charge_authorize, -> { where(type: "Transactions::ChargeTransaction").approved }
-  scope :charge_reversed, -> { where(type: "Transactions::ChargeTransaction").reversed }
+  statuses.keys.each do |status|
+    TRANSACTION_TYPES.each do |type|
+      scope "#{type.demodulize.underscore.split('_').first}_#{status}", -> { where(status: status, type: type) }
+    end
+  end
+
+  TRANSACTION_TYPES.each do |transaction_type|
+    define_method("#{transaction_type.demodulize.underscore}?") do
+      type == transaction_type
+    end
+  end
 end
