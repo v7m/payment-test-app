@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from '../contexts/AuthContext';
 
 const Merchant = () => {
     const params = useParams();
     const navigate = useNavigate();
+    const authContext = useContext(AuthContext);
     const [merchant, setMerchant] = useState({ ingredients: "" });
 
     useEffect(() => {
@@ -43,14 +45,18 @@ const Merchant = () => {
                     <div>
                         <div className="text-end mb-3 d-inline">
                             <Link to="/" className="btn btn-link">
-                                Home
+                                <button type="button" className="btn btn-light">Home</button>
                             </Link>
                         </div>
-                        <div className="text-end mb-3 d-inline">
-                            <Link to="/merchants" className="btn btn-link">
-                                Back to merchants
-                            </Link>
-                        </div>
+                        {authContext.isCurrentUserAdmin ? (
+                            <div className="text-end mb-3 d-inline">
+                                <Link to="/merchants" className="btn btn-link">
+                                    <button type="button" className="btn btn-light">Back to merchants</button>
+                                </Link>
+                            </div>
+                        ) : (
+                            null
+                        )}
                     </div>
 
                     <div className="row justify-content-md-center mb-3">
@@ -58,22 +64,26 @@ const Merchant = () => {
                             <h2 className="display-2">
                                 {merchant.name}
                             </h2>
-                            <h6 className="mb-3 display-6">
-                                <span class="badge bg-secondary">{merchant.status}</span>
-                            </h6>
-                            <h6 className="display-6">
+                            <div className="mb-3">
+                                <span className="badge bg-secondary">{merchant.status}</span>
+                            </div>
+                            <div>
                                 {merchant.email}
-                            </h6>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="row justify-content-md-center">
-                        <div className="col-md-auto">
-                            <button type="button" className="btn btn-danger" onClick={deleteMerchant}>
-                                Delete Merchant
-                            </button>
+                    {authContext.isCurrentUserAdmin ? (
+                        <div className="row justify-content-md-center">
+                            <div className="col-md-auto">
+                                <button type="button" className="btn btn-danger" onClick={deleteMerchant}>
+                                    Delete Merchant
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        null
+                    )}
                 </div>
             </div>
         </div>

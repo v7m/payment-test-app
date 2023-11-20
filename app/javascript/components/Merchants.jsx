@@ -42,7 +42,7 @@ const Merchants = () => {
                 <main className="container">
                     <div className="text-end mb-3">
                         <Link to="/" className="btn btn-link">
-                            Home
+                            <button type="button" className="btn btn-light">Home</button>
                         </Link>
                     </div>
                     <div className="row">

@@ -1,0 +1,16 @@
+nav.p-2[style="text-align: right"]
+  - if admin_signed_in?
+    = link_to(destroy_admin_session_path, method: :delete) do
+      button.btn.btn-dark.m-1[type="button"]
+        | Logout as Admin
+  - elsif merchant_admin_signed_in?
+    = link_to(destroy_merchant_admin_session_path, method: :delete) do
+      button.btn.btn-dark.m-1[type="button"]
+        | Logout as Merchant
+  - else
+    = link_to(new_admin_session_path) do
+      button.btn.btn-dark.m-1[type="button"]
+        | Login as Admin
+    = link_to(new_merchant_admin_session_path) do
+      button.btn.btn-dark.m-1[type="button"]
+        | Login as Merchant

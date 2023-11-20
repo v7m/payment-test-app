@@ -4,12 +4,16 @@ Rails.application.routes.draw do
   mount PaymentAPI::Base => "/"
 
   root "homepage#index"
-  get "/*path" => "homepage#index"
 
   devise_for :admins
-  devise_for :merchants
+  devise_scope :admin do
+    get "/admins/sign_out" => "devise/sessions#destroy"
+  end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :merchant_admins, class_name: "Merchant"
+  devise_scope :merchant_admin do
+    get "/merchant_admins/sign_out" => "devise/sessions#destroy"
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

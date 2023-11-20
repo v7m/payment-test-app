@@ -3,7 +3,13 @@
 module PaymentAPI
   module V1
     class Merchants < Grape::API
+      helpers Helpers::AuthenticationHelpers
+
       format :json
+
+      before do
+        authenticate!
+      end
 
       helpers do
         def merchant

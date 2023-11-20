@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title
+      | PaymentTestApp
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+  body
+    .row
+      .col-xs-10.col-xs-offset-1
+        - flash.each do |type, msg|
+          - if type == "notice"
+            .alert.alert-success
+              = msg
+          - else
+            .alert.alert-danger
+              = msg
+    = yield
