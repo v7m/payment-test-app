@@ -3,6 +3,7 @@ services:
   app:
     build: .
     command: ["bundle", "exec", "./bin/rails", "server", "-p", "3000", "-b", "0.0.0.0"]
+    container_name: app_container
     tty: true
     stdin_open: true
     volumes:
@@ -23,6 +24,7 @@ services:
   jobs:
     build: .
     command: ["bundle", "exec", "whenever", "--update-crontab", "&&", "cron", "-f"]
+    container_name: jobs_container
     volumes:
       - .:/rails
     depends_on:
@@ -38,6 +40,7 @@ services:
 
   db:
     image: postgres
+    container_name: db_container
     restart: always
     environment:
       POSTGRES_USER: postgres
